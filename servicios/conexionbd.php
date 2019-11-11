@@ -1,18 +1,27 @@
 <?php
+  
     /* Esta clase se encarcara de prestar el servicio de conexion con la base de datos, de realizar las consultas y ademas de 
     alamcenar ciertos codigos de estados HTTP para las respuestas a los entes que llamen a los recursos  */
 
     class ConexionBD{
-        private $servidor   =   "localhost"; //Servidor en el que se almacena la base de datos       
-        private $usuario    =   "root";   // Usuario con acceso al servidor    
-        private $contrasena =   "";    // Contraseña del usuario 
-        private $nombreBD   =   "juricol"; // Nombre de la base de datos a utilizar        
+        private $servidor   = null;  //Servidor en el que se almacena la base de datos       
+        private $usuario    = null;   // Usuario con acceso al servidor    
+        private $clave      = null;     // Contraseña del usuario 
+        private $nombreBD   = null;  // Nombre de la base de datos a utilizar        
         
         private $conexion           = null; // Atributo que conserva la conexion con la base de datos 
         private $codigoRespuesta    = null; // Atributo que almacena el codigo con el que se responde de la base de datos 
         private $cabeceraRespuesta  = null; // Atributo que almacena la cabecera asociada al codigo de respuesta 
 
         private $resultados = null; 
+
+        //configura el objeto de conección basado en el archivo de configuración
+        function __construct( $config ) { 
+            $this->servidor     = $config->servidor;
+            $this->usuario      = $config->usuario;
+            $this->clave        = $config->clave;
+            $this->nombreBD     = $config->esquema;
+        }
 
        //Metodo que obtiene el codigo de estado HTTP devuelto por la consulta 
         public function GetCodigoRespuesta(){
@@ -47,7 +56,7 @@
         public function Conectar(){
             //Dando uso de la libreria MySQLi de PHP se reaiza el intento de conexión y y la instancia de la 
             //conexión se conserva en el atributo $conexion
-            $this->conexion = @new mysqli($this->servidor, $this->usuario, $this->contrasena, $this->nombreBD);
+            $this->conexion = @new mysqli($this->servidor, $this->usuario, $this->clave, $this->nombreBD);
             
             if ($this->conexion->connect_error) {  
                                                     
