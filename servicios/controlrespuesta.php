@@ -6,8 +6,12 @@
         private $respuestaActual;
         private $conexionActual;
 
-        public function __construct($conexion){
+        public function asignarConexionBD( $conexion ){
             $this->conexionActual = $conexion;
+        }
+
+        public function obtenerConexion(){
+           return $this->conexionActual;
         }
 
         public function preparar($codigo, $resultados){
@@ -28,12 +32,12 @@
                     $this->respuestaActual= $resultados;
                 break;
                 case 503:
-                    $this->codigoActual = 503;
+                    $this->codigoActual = 503; //Sin conexion BD
                     $this->cabeceraActual = $this->conexionActual->GetCabeceraRespuesta();   
                     $this->respuestaActual= $resultados;
                 break;
                 case 400:
-                    $this->codigoActual = 400;
+                    $this->codigoActual = 400;  //error en consulta
                     $this->cabeceraActual = $this->conexionActual->GetCabeceraRespuesta();  
                     $this->respuestaActual= $resultados;
                 break;

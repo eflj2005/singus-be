@@ -35,5 +35,11 @@ $respuesta = array(
 
 $configuracion = (object) $respuesta;
 
+/*
+echo "<p>Recursos: </p>";
+echo "<pre>";
+print_r($configuracion);
+echo "</pre>";
+*/
 ?>
 

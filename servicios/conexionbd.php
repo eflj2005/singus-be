@@ -31,6 +31,12 @@
         public function GetError(){
             return $this->conexion->error;
         }
+        
+        public function GetErrorConexion(){
+            return $this->conexion->connect_error;
+        }
+        
+
         // Metodo que obtiene la cabecera asociada al codigo HTTP
         public function GetCabeceraRespuesta(){
             return $this->cabeceraRespuesta;
