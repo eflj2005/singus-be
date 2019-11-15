@@ -47,7 +47,7 @@
 
         }else {
 
-            $respuesta->preparar(401,'Llamado por metodo erroneo');
+            $respuesta->preparar("ERROR", 401,"Llamado por metodo erroneo");
             $respuesta->responder();
 
         }
@@ -67,7 +67,6 @@
         if($miConexion->GetCodigoRespuesta()!= 200){
             $GLOBALS["controlRespuesta"]->preparar($miConexion->GetCodigoRespuesta(),"Error de Conexion, ".$miConexion->GetErrorConexion());
             $GLOBALS["controlRespuesta"]->responder();
-
         }
         else{
 

@@ -64,30 +64,15 @@
             //conexión se conserva en el atributo $conexion
             $this->conexion = @new mysqli($this->servidor, $this->usuario, $this->clave, $this->nombreBD);
             
-            if ($this->conexion->connect_error) {  
-                                                    
-                $this->codigoRespuesta = 503; 
-                $this->cabeceraRespuesta = "HTTP/1.0 503 Service Unavailable"; 
-            }
-            else{                                   
-                $this->codigoRespuesta = 200; 
-                $this->cabeceraRespuesta = "HTTP/1.0 200 Ok";
-            }
+            if ($this->conexion->connect_error)     $this->codigoRespuesta = 503; 
+            else                                    $this->codigoRespuesta = 200; 
         }
-
        
         // Metodo que ejecuta la consulta sql respectiva al recurso que utiliza este metodo 
         public function EjecutarSQL($consultaSQL){
             //Ejecucion de la consulta y almacenamiento de cabeceras y codigo de acuerdo a la respuesta dada por la base de datos 
-            if ( !($this->resultados = $this->conexion->query($consultaSQL)) )  { 
-                $this->codigoRespuesta = 400;
-                $this->cabeceraRespuesta = "HTTP/1.0 400 Bad Request";
-            }else{
-
-                    $this->codigoRespuesta = 200;
-                    $this->cabeceraRespuesta = "HTTP/1.0 200 Ok";                
-                
-            }
+            if ( !($this->resultados = $this->conexion->query($consultaSQL)) )  $this->codigoRespuesta = 400;
+            else                                                                $this->codigoRespuesta = 200;
         }
     }
 ?>
