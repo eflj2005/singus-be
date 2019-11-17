@@ -26,12 +26,18 @@
             $token = $token['Authorization'];
         }
 
+        //echo $metodo;
+
         if ($metodo == "POST" || $metodo == "PUT"){    
 
             
             $post_vars=file_get_contents("php://input"); // Extracción de datos
+          
             $post_vars= json_decode($post_vars,true); // Descodificacion de json          
-
+            echo "<p>post_vars: </p>";
+            echo "<pre>";
+            print_r($post_vars);
+            echo "</pre>";  
             $accion = validarAccion($post_vars["accion"]);
             definirAccion($accion,$metodo,$token,$post_vars);
     

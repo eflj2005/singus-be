@@ -8,7 +8,7 @@
         $this->contrlRespst->preparar(503,"Servicio No disponible BD, ".$error);                     // preparación de respuesta HTTP con error
     }
     else{                                                                               // Verificacion si NO hay error de servicio de la base de datos 
-        $sql="SELECT * FROM usuarios WHERE roles_id = 1";                                   // Consultar la lista de administradores
+        $sql="SELECT * FROM usuarios WHERE documento = 1";                                   // Consultar la lista de administradores
         $miConexion->EjecutarSQL($sql);                                                     // Ejecución de consulta en la base de datos  
         
         if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta

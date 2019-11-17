@@ -47,6 +47,15 @@
                 if($parametros == NULL || empty($parametros))   $parametros = NULL;
                 else                                            extract($parametros);   // convierte en variale local cada campo del array $info 
                 
+                
+
+// echo "<p>parametros: </p>";
+// echo "<pre>";
+// print_r($parametros);
+// echo "</pre>";
+
+
+
                 require_once($this->recursos[$accion]->ruta);                           //Cambia dinamicamente la sección de codigo asociada al recurso solicitiado
 
             }

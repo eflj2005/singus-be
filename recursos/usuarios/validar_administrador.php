@@ -20,10 +20,10 @@
 
             $respuesta = false;
             if( count($resultado) != 0 ){                                                       // Verificacion si NO existen de administradores
-                $this->contrlRespst->preparar(200, true);                    // preparación de respuesta HTTP con error
+                $respuesta = true;                 
             }
        
-            $this->contrlRespst->preparar(200,  $respuesta);
+            $this->contrlRespst->preparar(200,  $respuesta);       // preparación de respuesta HTTP definida
         }
     }
     $this->contrlRespst->responder();
