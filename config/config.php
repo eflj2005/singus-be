@@ -28,10 +28,11 @@ SWITCH ($modo){
 $respuesta = array(
   "database" => (object) $database,
   "jwt" => (object) array(
-    "llave"     => "mQnNdQOuK1anjypV6/6L9r/T05B6IZuJerabQQj1Ae7e+gKtXLXqo9rmZjB6fkKHln+Aoq9rhlyfzCfZAYfgjQ==",
+    "llave"     => "cvMqCI8ZAChZpqjK2pJ/ZBZu9J3TVVVfEPN5u7BzXiimXkB4gxIAlT/35aoSzS2/EhwejoTR0uBUTLQjTmfWrg==",
     "algoritmo" => "HS256"
   ) 
 );
+
 
 $configuracion = (object) $respuesta;
 

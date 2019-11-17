@@ -17,12 +17,13 @@
             $this->contrlRespst->preparar(400, "Error al consultar ($sql)".$error);             // preparación de respuesta HTTP con error
         }else{                                                                              // Verificacion si NO hay errores en la consulta
             $resultado = $miConexion->GetResultados();                                          // Obtencion de resultados de la consulta 
-            if( count($resultado) == 0 ){                                                       // Verificacion si NO existen de administradores
-                $this->contrlRespst->preparar(404,"Administrador no detectado");                    // preparación de respuesta HTTP con error
+
+            $respuesta = false;
+            if( count($resultado) != 0 ){                                                       // Verificacion si NO existen de administradores
+                $this->contrlRespst->preparar(200, true);                    // preparación de respuesta HTTP con error
             }
-            else{                                                                               // Verificacion si existen de administradores 
-                $this->contrlRespst->preparar(200,"Acceso correcto");                           // preparación de respuesta HTTP correcta
-            }   
+       
+            $this->contrlRespst->preparar(200,  $respuesta);
         }
     }
     $this->contrlRespst->responder();
