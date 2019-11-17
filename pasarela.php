@@ -76,33 +76,32 @@
                 if($accion == 'inicio'){
                     $enrutador->LlamarAccion($accion,$metodo,$info);
                 }
-                else{
-                    if( $accion == 'inicio_sesion'){
-                    // require_once("usuarios/inicio_sesion.php");
-                    }else{
+                elseif( $accion == 'inicio_sesion'){
 
-    /*
-                        if(!(isset($token)) || $token == NULL || empty($token)){
-                            $respuesta->preparar(401,'No existe token');
+                    $enrutador->LlamarAccion($accion,$metodo,$info);
+
+                }else{
+
+/*
+                    if(!(isset($token)) || $token == NULL || empty($token)){
+                        $respuesta->preparar(401,'No existe token');
+                        $respuesta->responder();
+                    }else{
+            
+                        $result = $miToken->validar($token);
+            
+                        if($result != "Token valido"){
+                            $respuesta->preparar(401,$result);
                             $respuesta->responder();
                         }else{
-                
-                            $result = $miToken->validar($token);
-                
-                            if($result != "Token valido"){
-                                $respuesta->preparar(401,$result);
-                                $respuesta->responder();
-                            }else{
-                                require_once("enrutador.php");
-                            }
-                        }          
-    */                    
+                            require_once("enrutador.php");
+                        }
+                    }          
+*/                    
 
-                        $GLOBALS["controlRespuesta"]->preparar(404,"Accion no existe");
-                        $GLOBALS["controlRespuesta"]->responder();
+                    $GLOBALS["controlRespuesta"]->preparar(404,"Accion no existe");
+                    $GLOBALS["controlRespuesta"]->responder();
 
-
-                    }
                 }
             }else {
                 $GLOBALS["controlRespuesta"]->preparar($accion['Codigo'],$accion['Mensaje']);
