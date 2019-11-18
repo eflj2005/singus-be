@@ -6,7 +6,7 @@ HTTP/1.0	200	OK                              => Respuesta correcta
 HTTP/1.0	201	Created                         => Inserción Correcta
 HTTP/1.0	202	Accepted                        => Actualización Correcta
 HTTP/1.0	203	Non-Authoritative Information   => ERROR CONTROLADO
-HTTP/1.0	204	No Content                      
+HTTP/1.0	204	No Content                      => Validación fallida
 HTTP/1.0	205	Reset Content                   => Eliminación Correcta
 HTTP/1.0	206	Partial Content                 
 Redirection 3xx		
@@ -62,6 +62,7 @@ HTTP/1.0	505	HTTP Version Not Supported
                 200 => "Resultados",
                 201 => "Inserción Correcta",
                 202 => "Actualización Correcta",
+                204 => "Validación Fallida",
                 205 => "Eliminación Correcta",
                 400 => "Consulta SQL fallida",
                 403 => "Llamado con metodo erroneo",

@@ -41,10 +41,26 @@
             return $this->cabeceraRespuesta;
         }
 
-        // Metodo que obtiene los datos que entrega  la base de datos
+        // Metodo que obtiene los datos que entrega  la base de datos en un arreglo de objetos
         public function GetResultados(){
-            return $this->resultados->fetch_all(MYSQLI_ASSOC);
+            $resultado = null;
+
+            if($this->resultados->num_rows == 1){
+                $resultado = $this->resultados->fetch_object();
+            }
+            else{
+                while ($objeto = $this->resultado->fetch_object()) {
+                    $resultado[] = $objeto;
+                }
+            }
+
+            return $resultado;
         }
+
+        // Metodo que obtiene los datos que entrega  la base de datos
+        public function GetCantidadResultados(){
+            return $this->resultados->num_rows;
+        }        
 
         //Metodo que obtiene el ID autogenerado de una petición SQL "INSERT" envida a la BD
         public function ConsultarIdInsertado(){

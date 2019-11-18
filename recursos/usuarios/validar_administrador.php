@@ -14,16 +14,15 @@
         
         if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
             $error = $miConexion->GetError();                                                   // Obtencion del error transmitido por la base de datos
-            $this->contrlRespst->preparar(400, "Error al consultar ($sql)".$error);             // preparación de respuesta HTTP con error
+            $this->contrlRespst->preparar(203, 400, $error);             // preparación de respuesta HTTP con error
         }else{                                                                              // Verificacion si NO hay errores en la consulta
-            $resultado = $miConexion->GetResultados();                                          // Obtencion de resultados de la consulta 
 
             $respuesta = false;
-            if( count($resultado) != 0 ){                                                       // Verificacion si NO existen de administradores
+            if( $miConexion->GetCantidadResultados() > 0 ){                                                       // Verificacion si NO existen de administradores
                 $respuesta = true;                 
             }
        
-            $this->contrlRespst->preparar(200,  $respuesta);       // preparación de respuesta HTTP definida
+            $this->contrlRespst->preparar(200, 200, $respuesta);       // preparación de respuesta HTTP definida
         }
     }
     $this->contrlRespst->responder();

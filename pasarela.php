@@ -8,6 +8,9 @@
     require_once("servicios/conexionbd.php");                   //Llamado a servicio de conexión BD
     require_once("servicios/controlrespuesta.php");             // Llamado al servicio "controlrespuesta", quien es el encargado de administrar
                                                                 // las respuestas que retornen todos los recursos 
+    
+    require_once("vendor/autoload.php");
+
 
     $controlRespuesta = new ControlRespuesta();                        // instancia el servicio ControlRespuesta
 
@@ -34,11 +37,11 @@
                 $post_vars=file_get_contents("php://input");    // Extracción de datos
                 $post_vars= json_decode($post_vars,true);       // Descodificacion de json
 
-                echo "<p>post_vars: </p>";
-                echo "<pre>";
-                print_r($post_vars);
-                echo "</pre>";  
-                
+                // echo "<p>post_vars: </p>";
+                // echo "<pre>";
+                // print_r($post_vars);
+                // echo "</pre>";    
+
                 if( validarAccion( $post_vars["accion"] ) ) {    definirAccion($post_vars["accion"],$metodo,$token,$post_vars);     }
                 else                                        {    $respuesta->preparar(203, 404, false); $respuesta->responder();    }
             break;
@@ -68,8 +71,7 @@
             $GLOBALS["controlRespuesta"]->responder();
         }
         else{
-
-            if($accion == 'inicio' || $accion == 'inicio_sesion'){
+            if($accion == 'inicio' || $accion == 'iniciar_sesion'){                
                 $enrutador->LlamarAccion($accion,$metodo,$info);
             }
             else{
