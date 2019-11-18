@@ -28,38 +28,31 @@
 
         //echo $metodo;
 
-        if ($metodo == "POST" || $metodo == "PUT"){    
+        switch ($metodo){
+            case "POST":
+            case "PUT":
+                $post_vars=file_get_contents("php://input");    // Extracción de datos
+                $post_vars= json_decode($post_vars,true);       // Descodificacion de json
 
-            
-            $post_vars=file_get_contents("php://input"); // Extracción de datos
-          
-            $post_vars= json_decode($post_vars,true); // Descodificacion de json          
-            echo "<p>post_vars: </p>";
-            echo "<pre>";
-            print_r($post_vars);
-            echo "</pre>";  
-            $accion = validarAccion($post_vars["accion"]);
-            definirAccion($accion,$metodo,$token,$post_vars);
-    
-        }elseif ($metodo == "GET") {
-
-            $accion = validarAccion($_GET['accion']);
-            definirAccion($accion,$metodo,$token,$_GET);
-    
-        }elseif ($metodo == "DELETE"){
-
-            $accion = validarAccion($_GET['accion']);
-            definirAccion($accion,$metodo,$token,$_GET);
-
-        }else {
-
-            $respuesta->preparar("ERROR", 401,"Llamado por metodo erroneo");
-            $respuesta->responder();
-
+                echo "<p>post_vars: </p>";
+                echo "<pre>";
+                print_r($post_vars);
+                echo "</pre>";  
+                
+                if( validarAccion( $post_vars["accion"] ) ) {    definirAccion($post_vars["accion"],$metodo,$token,$post_vars);     }
+                else                                        {    $respuesta->preparar(203, 404, false); $respuesta->responder();    }
+            break;
+            case "GET":
+            case "DELETE":
+                if( validarAccion( $_GET["accion"] ) )      {    definirAccion($_GET["accion"],$metodo,$token,$_GET);          }
+                else                                        {    $respuesta->preparar(203, 404, false); $respuesta->responder();    }                    
+            break;
+            default:
+                $respuesta->preparar(203, 403, false);
+                $respuesta->responder();                
+            break;
         }
     }
-
-
 
     function definirAccion($accion,$metodo,$token,$info){
 
@@ -68,50 +61,41 @@
 
         $miConexion = new ConexionBD ($GLOBALS["configuracion"]->database);    // Instancia del servicio ConexionBD
         $GLOBALS["controlRespuesta"]->asignarConexionBD($miConexion);          // Se asigna conexion de base de datos a Control de respuesta        
-        $miConexion->Conectar();                                    // Metodo que ejecuta la conexion con la base de datos        
+        $miConexion->Conectar();                                                // Metodo que ejecuta la conexion con la base de datos        
         
         if($miConexion->GetCodigoRespuesta()!= 200){
-            $GLOBALS["controlRespuesta"]->preparar($miConexion->GetCodigoRespuesta(),"Error de Conexion, ".$miConexion->GetErrorConexion());
+            $GLOBALS["controlRespuesta"]->preparar( 203, $miConexion->GetCodigoRespuesta(), $miConexion->GetErrorConexion() );
             $GLOBALS["controlRespuesta"]->responder();
         }
         else{
 
-            if(gettype($accion) != "array"){
+            if($accion == 'inicio' || $accion == 'inicio_sesion'){
+                $enrutador->LlamarAccion($accion,$metodo,$info);
+            }
+            else{
 
-                if($accion == 'inicio'){
-                    $enrutador->LlamarAccion($accion,$metodo,$info);
-                }
-                elseif( $accion == 'inicio_sesion'){
-
-                    $enrutador->LlamarAccion($accion,$metodo,$info);
-
+    /*
+                if(!(isset($token)) || $token == NULL || empty($token)){
+                    $respuesta->preparar(401,'No existe token');
+                    $respuesta->responder();
                 }else{
-
-/*
-                    if(!(isset($token)) || $token == NULL || empty($token)){
-                        $respuesta->preparar(401,'No existe token');
+        
+                    $result = $miToken->validar($token);
+        
+                    if($result != "Token valido"){
+                        $respuesta->preparar(401,$result);
                         $respuesta->responder();
                     }else{
-            
-                        $result = $miToken->validar($token);
-            
-                        if($result != "Token valido"){
-                            $respuesta->preparar(401,$result);
-                            $respuesta->responder();
-                        }else{
-                            require_once("enrutador.php");
-                        }
-                    }          
-*/                    
+                        require_once("enrutador.php");
+                    }
+                }          
+    */                    
 
-                    $GLOBALS["controlRespuesta"]->preparar(404,"Accion no existe");
-                    $GLOBALS["controlRespuesta"]->responder();
-
-                }
-            }else {
-                $GLOBALS["controlRespuesta"]->preparar($accion['Codigo'],$accion['Mensaje']);
+                $GLOBALS["controlRespuesta"]->preparar(203, 404, false);
                 $GLOBALS["controlRespuesta"]->responder();
+
             }
+
 
         }
     }
@@ -121,14 +105,9 @@
 
 
     function validarAccion($accion){
-        if(!(isset($accion)) || $accion == NULL || empty($accion)){
-            return array("Codigo"=>404,"Mensaje"=>'Accion vacia o no enviada');
-        }elseif(gettype($accion) == "string" ) {
-            return $accion;
-        }else {
-            return array("Codigo"=>401,"Mensaje"=>'Tipo de dato de accion no valido');
-        }
-        
+        $validar = true;
+        if(!(isset($accion)) || $accion == NULL || empty($accion) || gettype($accion) == "array")  $validar = false;
+        return $validar;    
     }
 
  
