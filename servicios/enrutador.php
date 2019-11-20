@@ -65,5 +65,4 @@
     $enrutador->AgregarRecurso("iniciar_sesion","POST","recursos/usuarios/iniciar_sesion.php");
     $enrutador->AgregarRecurso("registrar_agenda","POST","recursos/agendamiento/guardar_agenda.php");
 
-
 ?>

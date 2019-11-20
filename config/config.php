@@ -1,18 +1,26 @@
 <?PHP
 
 //Define el modo de ejecución de la BD => DEV = Desarrollo / PRO = Producción
-$modo = "DEV";
+$modo = "DEV2";
 
 
 $database = null;
 
 SWITCH ($modo){
-  case "DEV":
+  case "DEV1":
     $database = array (
       "servidor"  => "localhost",
       "usuario"   => "singususer",
       "clave"     => "Niwde830509",
       "esquema"   => "singus"
+    );
+  break;
+  case "DEV2":
+    $database = array (
+      "servidor"  => "remotemysql.com:3306",
+      "usuario"   => "kJda6oXEdO",
+      "clave"     => "3HiwKtz86F",
+      "esquema"   => "kJda6oXEdO"
     );
   break;
   case "PRO":

@@ -53,7 +53,7 @@
             }
 
             if($validación) $this->contrlRespst->preparar( 200, 200, $token );                                       // preparación de respuesta HTTP correcta
-            else            $this->contrlRespst->preparar( 203, 204, "La información de ingreso es incorrecta");     // preparación de respuesta HTTP con error
+            else            $this->contrlRespst->preparar( 203, 401, "La información de ingreso es incorrecta");     // preparación de respuesta HTTP con error
         }
     }
     $this->contrlRespst->responder();
