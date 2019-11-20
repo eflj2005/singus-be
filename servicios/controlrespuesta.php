@@ -67,7 +67,7 @@ HTTP/1.0	505	HTTP Version Not Supported
                 400 => "Consulta SQL fallida",
                 403 => "Llamado con metodo erroneo",
                 404 => "Recurso no existente",
-                401 => "Usuario No Autorizado",
+                401 => "Acceso No Autorizado",
                 503 => "BD No Disponible"
             );
         }
