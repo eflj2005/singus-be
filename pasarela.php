@@ -29,7 +29,6 @@
             $token = $token['Authorization'];
         }
 
-        //echo $metodo;
 
         switch ($metodo){
             case "POST":

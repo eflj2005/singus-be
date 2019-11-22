@@ -62,7 +62,8 @@
     $enrutador = new RouterService($GLOBALS["controlRespuesta"]);
 
     $enrutador->AgregarRecurso("inicio","GET","recursos/usuarios/validar_administrador.php");
-    $enrutador->AgregarRecurso("iniciar_sesion","POST","recursos/usuarios/iniciar_sesion.php");
+    $enrutador->AgregarRecurso("iniciar_sesion","POST","recursos/usuarios/validar_sesion.php");
+    //$enrutador->AgregarRecurso("obtener_registros","GET","recursos/generales/consultar_tabla.php");
     $enrutador->AgregarRecurso("registrar_agenda","POST","recursos/agendamiento/guardar_agenda.php");
 
 ?>
