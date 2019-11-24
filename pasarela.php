@@ -72,7 +72,8 @@
           $enrutador->LlamarAccion($accion,$metodo,$info);
       }
       else{
-        if ( ( $accion == 'crear_registros' || $accion == 'calave' ) && !$info["conSeguridad"] ){    
+
+        if ( $accion == 'procesar_registros' && !$info["conSeguridad"] ){    
            $enrutador->LlamarAccion($accion,$metodo,$info);
         }
         else{
@@ -92,19 +93,15 @@
                 require_once("enrutador.php");
             }
         }          
-  */                   
+  */           
+  
+  $GLOBALS["controlRespuesta"]->preparar(203, 404, false);
+  $GLOBALS["controlRespuesta"]->responder();        
         }
-
-        $GLOBALS["controlRespuesta"]->preparar(203, 404, false);
-        $GLOBALS["controlRespuesta"]->responder();
-
       }
     }
+    $miConexion->CerrarConexion();
   }
-
-
-
-
 
   function validarAccion($accion){
     $validar = true;
