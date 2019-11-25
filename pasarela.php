@@ -68,7 +68,12 @@
       $GLOBALS["controlRespuesta"]->responder();
     }
     else{
-      if($accion == 'inicio' || $accion == 'iniciar_sesion'){                
+      if(
+        $accion == 'inicio' || 
+        $accion == 'iniciar_sesion' || 
+        $accion == 'generar_codigo' ||
+        $accion == 'validar_codigo' 
+      ){
           $enrutador->LlamarAccion($accion,$metodo,$info);
       }
       else{

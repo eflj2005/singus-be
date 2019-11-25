@@ -65,7 +65,9 @@
     $enrutador->AgregarRecurso("iniciar_sesion","POST","recursos/usuarios/validar_sesion.php");
     //$enrutador->AgregarRecurso("obtener_registros","GET","recursos/generales/consultar_tabla.php");
     $enrutador->AgregarRecurso("procesar_registros","POST","recursos/generales/almacenar_registros.php");
-    
+    $enrutador->AgregarRecurso("generar_codigo","POST","recursos/usuarios/enviar_codigo.php");
+    $enrutador->AgregarRecurso("validar_codigo","POST","recursos/usuarios/verificar_codigo.php");
     $enrutador->AgregarRecurso("registrar_agenda","POST","recursos/agendamiento/guardar_agenda.php");
-
+    
+    
 ?>
