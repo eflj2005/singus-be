@@ -41,7 +41,7 @@
                 "nombres"   => $registro->nombres,
                 "apellidos" => $registro->apellidos,
                 "correo"    => $registro->correo,
-                "roles_id"  => $registro->roles_id
+                "rol"       => $registro->rol
                )
             );
             $llave = base64_decode( $GLOBALS["configuracion"]->jwt->llave );
