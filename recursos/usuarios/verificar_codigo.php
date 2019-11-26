@@ -18,6 +18,8 @@
         }else{                                                                              // Verificacion si NO hay errores en la consulta
             if( $miConexion->GetCantidadResultados() == 1 ){                                                       // Verificacion si NO existen de administradores
                 $datosUsuario = $miConexion->GetResultados();
+                echo "<p>Recibido: ".$datosUsuario->codigovalidacion."</p>";
+                echo "<p>En BD: ".$datos["codigoRecibido"]."</p>";
                 if($datosUsuario->codigovalidacion == $datos["codigoRecibido"] ){
                     $this->contrlRespst->preparar(200, 200, true);       // preparación de respuesta HTTP definida
                 }
@@ -30,5 +32,5 @@
             }
         }
     }
-    $this->contrlRespst->responder();
+    //$this->contrlRespst->responder();
 ?>
