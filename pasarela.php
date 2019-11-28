@@ -78,11 +78,13 @@
       }
       else{
 
-        if ( $accion == 'procesar_registros' && !$info["conSeguridad"] ){    
+        if(isset($info["conSeguridad"])) $info["conSeguridad"]  = json_decode($info["conSeguridad"]); 
+
+        if ( ( $accion == 'procesar_registros' || $accion == 'obtener_registros' ) && !$info["conSeguridad"] ){    
            $enrutador->LlamarAccion($accion,$metodo,$info);
         }
         else{
-          echo "AQUI2";    
+          echo "<p>AQUI2</p>";    
   /*
         if(!(isset($token)) || $token == NULL || empty($token)){
             $respuesta->preparar(401,'No existe token');

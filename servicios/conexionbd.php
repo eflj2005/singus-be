@@ -120,47 +120,45 @@
 
     //Metodo construlle una instruccion SQL adecuada de acuerdo a partir de un tipo de consulta, un nombre de tabla y los datos aprocesar 
     public function ConstruirSQL(string $tipoConsulta, string $nombretabla, array $datosRecibidos){
-      $instruccionesSql= array();
+      $instruccionSql= "";
       $campos = array();
 
       $camposTabla = $this->ObtenerCamposTabla($nombretabla);
 
       switch ($tipoConsulta){
         case "I":
-          foreach ($datosRecibidos as $claveDatos => $dato){
 
-            $nuevoDato=array();
+          $nuevoDato=array();
 
-            foreach ($camposTabla as $claveCampos => $campo) {
-              if( !isset($dato[$campo]) ) $dato[$campo] = 'NULL';
-              else                        $dato[$campo] = "'".$dato[$campo]."'";
-              
-              $nuevoDato[] = $dato[$campo];
-            }
+          foreach ($camposTabla as $claveCampos => $campo) {
+            if( !isset($datosRecibidos[$campo]) ) $datosRecibidos[$campo] = 'NULL';
+            else                                  $datosRecibidos[$campo] = "'".$datosRecibidos[$campo]."'";
+            
+            $nuevoDato[] = $datosRecibidos[$campo];
+          }
 
-            $informacion  = implode ( "," ,  $nuevoDato );
-            $instruccionesSql[] = "INSERT INTO $nombretabla ( ".implode ( "," ,  $camposTabla )." ) VALUES ( $informacion )";
-          }       
+          $informacion  = implode ( "," ,  $nuevoDato );
+          $instruccionSql = "INSERT INTO $nombretabla ( ".implode ( "," ,  $camposTabla )." ) VALUES ( $informacion )";
+  
         break;
         case "A":
-          foreach ($datosRecibidos as $claveDatos => $dato){
-            
-           $nuevoDato=array();
 
-            foreach ($camposTabla as $claveCampos => $campo) {
-              if( isset($dato[$campo]) ){
-                $dato[$campo] = $campo." = '".$dato[$campo]."'";
-                $nuevoDato[] = $dato[$campo];
-              }            
-            }
- 
-            $informacion  = implode ( "," ,  $nuevoDato );
-            $instruccionesSql[] = "UPDATE $nombretabla SET $informacion WHERE ".$dato['id'];
+          $nuevoDato=array();
+
+          foreach ($camposTabla as $claveCampos => $campo) {
+            if( isset($datosRecibidos[$campo]) ){
+              $datosRecibidos[$campo] = $campo." = '".$datosRecibidos[$campo]."'";
+              $nuevoDato[] = $datosRecibidos[$campo];
+            }            
           }
+
+          $informacion  = implode ( "," ,  $nuevoDato );
+          $instruccionSql = "UPDATE $nombretabla SET $informacion WHERE ".$datosRecibidos['id'];
+
         break;
       }
 
-      return $instruccionesSql;
+      return $instruccionSql;
     }
   }
 ?>
