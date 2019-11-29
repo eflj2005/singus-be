@@ -38,7 +38,7 @@
             $this->contrlRespst->preparar(203, 400, $error);             // preparación de respuesta HTTP con error
         }else{                                                                              // Verificacion si NO hay errores en la consulta
       
-            $this->contrlRespst->preparar(200, 200, array($miConexion->GetResultados()));       // preparación de respuesta HTTP definida
+            $this->contrlRespst->preparar(200, 200, $miConexion->GetResultados() );       // preparación de respuesta HTTP definida
         }
     }
     $this->contrlRespst->responder();
