@@ -21,8 +21,8 @@
       $validación=false;                                                                                          // Definicion de variable de control en estado fallido
       $token = null;
         
-      if( $miConexion->GetCantidadResultados() != 0 ){                                                            // Validación si existen existe el usuario
-        $registro = $miConexion->GetResultados();                                                               // Obtencion de resultados de la consulta                 
+      if( $miConexion->GetCantidadResultados() == 1 ){                                                            // Validación si existen existe el usuario
+        $registro = $miConexion->GetResultados()[0];                                                               // Obtencion de resultados de la consulta                 
 
         if($registro->estado!= 'I' && $registro->estado!= 'B'){                                                 // Validación si usuario bloqueado o inactivo
           //password_Verify($clave,$registro->clave)
@@ -42,7 +42,7 @@
                 "apellidos" => $registro->apellidos,
                 "correo"    => $registro->correo,
                 "rol"       => $registro->rol
-               )
+              )
             );
             $llave = base64_decode( $GLOBALS["configuracion"]->jwt->llave );
             $token = JWT::encode( $dataToken , $llave, $GLOBALS["configuracion"]->jwt->algoritmo );                    
@@ -57,6 +57,9 @@
         else{
           $this->contrlRespst->preparar( 203, 401, "Usuario bloqueado o inactivo, comuniquese con el administrador" );    // preparación de respuesta HTTP con error
         }
+      }
+      else{
+        $this->contrlRespst->preparar( 203, 401, "Información de ingreso es incorrecta");     // preparación de respuesta HTTP con error
       }            
     }
   }

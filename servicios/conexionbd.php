@@ -58,13 +58,9 @@
     // Metodo que obtiene los datos que entrega  la base de datos en un arreglo de objetos
     public function GetResultados(){
       $resultado = null;
-      if($this->resultados->num_rows == 1){
-        $resultado = $this->resultados->fetch_object();
-      }
-      else{
-        while ($objeto = $this->resultados->fetch_object()) {
-          $resultado[] = $objeto;
-        }
+
+      while ($objeto = $this->resultados->fetch_object()) {
+        $resultado[] = $objeto;
       }
 
       return $resultado;

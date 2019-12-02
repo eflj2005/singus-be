@@ -17,7 +17,8 @@
             $this->contrlRespst->preparar(203, 400, $error);             // preparación de respuesta HTTP con error
         }else{                                                                              // Verificacion si NO hay errores en la consulta
             if( $miConexion->GetCantidadResultados() == 1 ){                                                       // Verificacion si NO existen de administradores
-                $datosUsuario = $miConexion->GetResultados();
+                $datosUsuario = $miConexion->GetResultados()[0];
+
                 if($datosUsuario->codigovalidacion == $datos["codigoRecibido"] ){
                     $this->contrlRespst->preparar(200, 200, true);       // preparación de respuesta HTTP definida
                 }

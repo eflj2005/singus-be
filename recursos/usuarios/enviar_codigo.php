@@ -39,7 +39,7 @@
           }
         }
           
-        $datosUsuario = $miConexion->GetResultados();
+        $datosUsuario = $miConexion->GetResultados()[0];
         $miConexion->EjecutarSQL("UPDATE usuarios SET codigovalidacion='".$codigo."' WHERE id=".$datos["idBuscado"]);
 
 

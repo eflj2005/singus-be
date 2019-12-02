@@ -64,6 +64,7 @@
     $enrutador->AgregarRecurso("inicio",                "GET",  "recursos/usuarios/validar_administrador.php"   );
     $enrutador->AgregarRecurso("iniciar_sesion",        "POST", "recursos/usuarios/validar_sesion.php"          );
     $enrutador->AgregarRecurso("obtener_registros",     "GET",  "recursos/generales/consultar_registros.php"    );
+    $enrutador->AgregarRecurso("obtener_campos",        "GET",  "recursos/generales/consultar_estructura.php"   );    
     $enrutador->AgregarRecurso("procesar_registros",    "POST", "recursos/generales/almacenar_registros.php"    );
     $enrutador->AgregarRecurso("generar_codigo",        "POST", "recursos/usuarios/enviar_codigo.php"           );
     $enrutador->AgregarRecurso("validar_codigo",        "POST", "recursos/usuarios/verificar_codigo.php"        );
