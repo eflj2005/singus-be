@@ -17,7 +17,7 @@
             $campos = array();
             
             foreach ($miConexion->GetResultados() as $clave => $campo){
-                $campos[] = $campo->Field;
+                $campos[] = array( "nombre"=> $campo->Field , "tipo" =>  $campo->Type, "restriccion" => $campo->Key );
             }
             $this->contrlRespst->preparar(200, 200, $campos );       // preparación de respuesta HTTP definida
         }
