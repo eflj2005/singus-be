@@ -8,7 +8,7 @@
         $this->contrlRespst->preparar(203, 503, $error);                     // preparación de respuesta HTTP con error
     }  
     else{
-        $miConexion->EjecutarSQL("DESCRIBE ".$tabla);                                                     // Ejecución de consulta en la base de datos  
+        $miConexion->EjecutarSQL("SHOW FULL COLUMNS FROM ".$tabla);                                                     // Ejecución de consulta en la base de datos  
         
         if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
             $error = $miConexion->GetError();                                                   // Obtencion del error transmitido por la base de datos
@@ -17,7 +17,12 @@
             $campos = array();
             
             foreach ($miConexion->GetResultados() as $clave => $campo){
-                $campos[] = array( "nombre"=> $campo->Field , "tipo" =>  $campo->Type, "restriccion" => $campo->Key );
+                $campos[] = array( 
+                    "nombre"=> $campo->Field , 
+                    "tipo" =>  $campo->Type , 
+                    "restriccion" => $campo->Key ,
+                    "comentarios" => $campo->Comment
+                );
             }
             $this->contrlRespst->preparar(200, 200, $campos );       // preparación de respuesta HTTP definida
         }
