@@ -27,7 +27,7 @@
         if($registro->estado!= 'I' && $registro->estado!= 'B'){                                                 // Validación si usuario bloqueado o inactivo
           //password_Verify($clave,$registro->clave)
           //password_hash("rasmuslerdorf", PASSWORD_DEFAULT)
-          if($registro->clave == $clave ){                                                                    // Validación si coincide la clave
+          if(password_Verify($clave,$registro->clave)){                                                                    // Validación si coincide la clave
 
             $iat = time();
             $dataToken = array(

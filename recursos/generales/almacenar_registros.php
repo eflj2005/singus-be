@@ -44,9 +44,14 @@
     }    
 
     if($validador){
-      foreach ($arregloActualizaciones as $clave => $actualización){
+      foreach ($arregloActualizaciones as $clave => $actualizacion){
         if($validador){
-          $instruccion=$miConexion->ConstruirSQL("A", $tabla, $actualización);
+
+          if($tabla == "usuarios" &&  $actualizacion["clave"] != "" ){
+            $actualizacion["clave"] = password_hash($actualizacion["clave"], PASSWORD_DEFAULT);
+          }
+
+          $instruccion=$miConexion->ConstruirSQL("A", $tabla, $actualizacion);
           $miConexion->EjecutarSQL($instruccion);
           if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
             $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error

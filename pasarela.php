@@ -80,7 +80,14 @@
 
         if(isset($info["conSeguridad"])) $info["conSeguridad"]  = json_decode($info["conSeguridad"]); 
 
-        if ( ( $accion == 'procesar_registros' || $accion == 'obtener_registros' || $accion == 'obtener_campos' ) && !$info["conSeguridad"] ){    
+        if ( 
+          ( 
+            $accion == 'procesar_registros' || 
+            $accion == 'obtener_registros' || 
+            $accion == 'obtener_campos' 
+          ) && 
+          !$info["conSeguridad"] 
+        ){    
            $enrutador->LlamarAccion($accion,$metodo,$info);
         }
         else{

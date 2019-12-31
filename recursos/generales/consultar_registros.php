@@ -1,7 +1,6 @@
 <?php
     $filtros = json_decode($filtros);
 
-
     /* Este recurso se encarga de verificar la existencia del usuario admministrador */
 
     $miConexion = $this->contrlRespst->obtenerConexion();                               // Asisgnacion de conexionBD a variable local
@@ -23,9 +22,9 @@
         $condiciones="";
         if($filtros){
             $conteo=0;
-            foreach ($filtros as $clave => $filtro){
-                if($conteo==0)   $condiciones .= "WHERE ";
-                $condiciones .=  $clave ." = '".$filtro."' ";
+            foreach ($filtros as $campo => $filtro){
+                if($conteo==0)   $condiciones .= " WHERE ";
+                $condiciones .=  $campo ." = '".$filtro."' ";
                 if( $conteo < ( count($filtros)-1 ) )   $condiciones .= "AND ";
             }
         }
@@ -37,8 +36,14 @@
             $error = $miConexion->GetError();                                                   // Obtencion del error transmitido por la base de datos
             $this->contrlRespst->preparar(203, 400, $error);             // preparación de respuesta HTTP con error
         }else{                                                                              // Verificacion si NO hay errores en la consulta
-      
-            $this->contrlRespst->preparar(200, 200, $miConexion->GetResultados() );       // preparación de respuesta HTTP definida
+            $registros = $miConexion->GetResultados();
+            if($tabla == "usuarios"){
+                foreach ($registros as $indice => $registro){
+                    $registros[$indice]->clave = "";
+                }
+            }      
+            
+            $this->contrlRespst->preparar(200, 200, $registros );       // preparación de respuesta HTTP definida
         }
     }
     $this->contrlRespst->responder();
