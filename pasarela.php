@@ -7,11 +7,13 @@
 
   require_once("servicios/conexionbd.php");                   //Llamado a servicio de conexión BD
   require_once("servicios/controlrespuesta.php");             // Llamado al servicio "controlrespuesta", quien es el encargado de administrar
-                                                       // las respuestas que retornen todos los recursos 
+                                                              // las respuestas que retornen todos los recursos 
+  require_once("servicios/token.php");                        // Llamado al servicio "Token", quien es el encargado de administrar los token                                                      
 
   require_once("vendor/autoload.php");
   
-  $controlRespuesta = new ControlRespuesta();                        // instancia el servicio ControlRespuesta
+  $controlRespuesta = new ControlRespuesta();                    // instancia el servicio ControlRespuesta
+  $controlToken = new Token();
   
   $metodo = $_SERVER['REQUEST_METHOD'];
   
@@ -23,7 +25,8 @@
     if(!(isset($token['Authorization'])) || $token['Authorization'] == NULL || empty($token['Authorization'])){
         $token = NULL;
     }else {
-        $token = $token['Authorization'];
+        preg_match('/Bearer\s(\S+)/', $token['Authorization'], $matches);
+        $token =$matches[1];
     }
     
     switch ($metodo){
@@ -83,34 +86,34 @@
         if ( 
           ( 
             $accion == 'procesar_registros' || 
-            $accion == 'obtener_registros' || 
-            $accion == 'obtener_campos' 
+            $accion == 'obtener_registros'
           ) && 
           !$info["conSeguridad"] 
         ){    
            $enrutador->LlamarAccion($accion,$metodo,$info);
         }
         else{
-          echo "<p>AQUI2</p>";    
-  /*
-        if(!(isset($token)) || $token == NULL || empty($token)){
-            $respuesta->preparar(401,'No existe token');
-            $respuesta->responder();
-        }else{
+          // echo "<p>AQUI2</p>";    
 
-            $result = $miToken->validar($token);
+          // echo "<p>Accion: $accion </p>";
+          // echo "<p>Token: </p>";
+          // echo "<p>";
+          // var_dump($token);
+          // echo "</p>";   
 
-            if($result != "Token valido"){
-                $respuesta->preparar(401,$result);
-                $respuesta->responder();
+          if(!(isset($token)) || $token == NULL || empty($token)){
+            $GLOBALS["controlRespuesta"]->preparar(401,401,'No existe token');
+            $GLOBALS["controlRespuesta"]->responder();
+          }else{
+            $miToken = new Token();
+
+            if( !$miToken->validar($token) ){
+              $GLOBALS["controlRespuesta"]->preparar(203,401,'Token no valido');
+              $GLOBALS["controlRespuesta"]->responder();
             }else{
-                require_once("enrutador.php");
+              $enrutador->LlamarAccion($accion,$metodo,$info);
             }
-        }          
-  */           
-  
-  $GLOBALS["controlRespuesta"]->preparar(203, 404, false);
-  $GLOBALS["controlRespuesta"]->responder();        
+          }          
         }
       }
     }

@@ -10,7 +10,7 @@
     $this->contrlRespst->preparar(503,"Servicio No disponible BD, ".$error);                                        // preparación de respuesta HTTP con error
   }
   else{                                                                                                               // Validación si NO hay error de servicio de la base de datos 
-    $sql="SELECT * FROM usuarios WHERE documento = ".$documento;                                                    // Consultar la lista de administradores
+    $sql="SELECT id, nombres, apellidos, correo, rol, clave, estado FROM usuarios WHERE documento = ".$documento;                                                    // Consultar la lista de administradores
     $miConexion->EjecutarSQL($sql);                                                                                 // Ejecución de consulta en la base de datos  
         
     if ($miConexion->GetCodigoRespuesta() == 400){                                                                  // Validación si hay errores en la consulta
@@ -29,25 +29,11 @@
           //password_hash("rasmuslerdorf", PASSWORD_DEFAULT)
           if(password_Verify($clave,$registro->clave)){                                                                    // Validación si coincide la clave
 
-            $iat = time();
-            $dataToken = array(
-              "jti"   =>  base64_encode(openssl_random_pseudo_bytes(32)),     //token id
-              "iat"   =>  $iat,                                               //Momento creacion
-              "nbf"   =>  $iat + 10,                                          //Momento minimo de uso
-              "exp"   =>  $iat + 86400,                                       //expiración segundos
-              "iss"   =>  $GLOBALS["configuracion"]->database->servidor,      //desde donde fue generado               
-              "data"  =>  array(                                              //datos adicionales
-                "id"        => $registro->id,
-                "nombres"   => $registro->nombres,
-                "apellidos" => $registro->apellidos,
-                "correo"    => $registro->correo,
-                "rol"       => $registro->rol
-              )
-            );
-            $llave = base64_decode( $GLOBALS["configuracion"]->jwt->llave );
-            $token = JWT::encode( $dataToken , $llave, $GLOBALS["configuracion"]->jwt->algoritmo );                    
+            unset( $registro->estado, $registro->clave );
 
-            $this->contrlRespst->preparar( 200, 200, $token );                                            // preparación de respuesta HTTP con satisfactorio
+            $nuevoToken = new Token();
+
+            $this->contrlRespst->preparar( 200, 200,  $nuevoToken->GenerarToken($registro) );                                            // preparación de respuesta HTTP con satisfactorio
 
           }
           else{
