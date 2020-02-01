@@ -2,7 +2,7 @@
   use Firebase\JWT\JWT;
 
   /* Este recurso se encarga de validar el inicio de sesion y de ser coorreco crea el Token de autenticación */
-    
+
   $miConexion = $this->contrlRespst->obtenerConexion();                                                               // Asisgnacion de conexionBD a variable local
 
   if ($miConexion->GetCodigoRespuesta() == 503 ){                                                                     // Validación si hay error de servicio de la base de datos 
@@ -10,7 +10,7 @@
     $this->contrlRespst->preparar(503,"Servicio No disponible BD, ".$error);                                        // preparación de respuesta HTTP con error
   }
   else{                                                                                                               // Validación si NO hay error de servicio de la base de datos 
-    $sql="SELECT id, nombres, apellidos, correo, rol, clave, estado FROM usuarios WHERE documento = ".$documento;                                                    // Consultar la lista de administradores
+    $sql="SELECT id, documento, nombres, apellidos, correo, rol, clave, estado FROM usuarios WHERE documento = ".$documento;                                                    // Consultar la lista de administradores
     $miConexion->EjecutarSQL($sql);                                                                                 // Ejecución de consulta en la base de datos  
         
     if ($miConexion->GetCodigoRespuesta() == 400){                                                                  // Validación si hay errores en la consulta
@@ -31,9 +31,13 @@
 
             unset( $registro->estado, $registro->clave );
 
-            $nuevoToken = new Token();
-
-            $this->contrlRespst->preparar( 200, 200,  $nuevoToken->GenerarToken($registro) );                                            // preparación de respuesta HTTP con satisfactorio
+            if($generarToken){
+              $nuevoToken = new Token();
+              $this->contrlRespst->preparar( 200, 200,  $nuevoToken->GenerarToken($registro) );                                            // preparación de respuesta HTTP con satisfactorio
+            }
+            else{
+              $this->contrlRespst->preparar( 200, 200,  true );                                            // preparación de respuesta HTTP con satisfactorio              
+            }
 
           }
           else{

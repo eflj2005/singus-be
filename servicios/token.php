@@ -12,17 +12,19 @@
 
     class TokenDatosParaUsuario{
         public $id;
+        public $documento;        
         public $nombres;
         public $apellidos;
         public $correo;
         public $rol;
 
         function __construct($datosRecibidos){
-            $this->id        = $datosRecibidos->id;
-            $this->nombres   = $datosRecibidos->nombres;
-            $this->apellidos = $datosRecibidos->apellidos;
-            $this->correo    = $datosRecibidos->correo;
-            $this->rol       = $datosRecibidos->rol;
+            $this->id           = $datosRecibidos->id;
+            $this->documento    = $datosRecibidos->documento;            
+            $this->nombres      = $datosRecibidos->nombres;
+            $this->apellidos    = $datosRecibidos->apellidos;
+            $this->correo       = $datosRecibidos->correo;
+            $this->rol          = $datosRecibidos->rol;
         }
     }
 

@@ -86,7 +86,8 @@
         if ( 
           ( 
             $accion == 'procesar_registros' || 
-            $accion == 'obtener_registros'
+            $accion == 'obtener_registros' ||
+            $accion == 'obtener_campos'
           ) && 
           !$info["conSeguridad"] 
         ){    
