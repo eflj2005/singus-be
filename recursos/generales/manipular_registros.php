@@ -19,6 +19,7 @@
       unset( $dato["modo"]);
       if($modo == 'I') $arregloInsercciones[]    = $dato;
       if($modo == 'A') $arregloActualizaciones[] = $dato;
+      if($modo == 'E') $arregloeliminaciones[] = $dato;
     }  
 
     // $instruccionSqlInserccion = $miConexion->ConstruirSQL("I", $tabla, $arregloInsercciones);
@@ -52,6 +53,22 @@
           }
 
           $instruccion=$miConexion->ConstruirSQL("A", $tabla, $actualizacion);
+          $miConexion->EjecutarSQL($instruccion);
+          if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
+            $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error
+            $validador=false;
+            $miConexion->ReversarInstruccionesSQL();              
+          }
+        }
+      }
+    }
+
+    if($validador){
+      foreach ($arregloEliminaciones as $clave => $eliminacion){
+        if($validador){
+
+
+          $instruccion=$miConexion->ConstruirSQL("E", $tabla, $eliminacions);
           $miConexion->EjecutarSQL($instruccion);
           if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
             $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error

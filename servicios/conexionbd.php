@@ -152,6 +152,11 @@
           $instruccionSql = "UPDATE $nombretabla SET $informacion WHERE ".$datosRecibidos['id'];
 
         break;
+        case "E":
+
+          $instruccionSql = "DELETE FROM $nombretabla WHERE ".$datosRecibidos['id'];
+
+        break;        
       }
 
       return $instruccionSql;

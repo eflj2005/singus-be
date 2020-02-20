@@ -1,7 +1,7 @@
 <?PHP
 
 //Define el modo de ejecución de la BD => DEV = Desarrollo / PRO = Producción
-$modo = "DEV2";
+$modo = "DEV3";
 
 
 $database = null;
@@ -23,6 +23,14 @@ SWITCH ($modo){
       "esquema"   => "kJda6oXEdO"
     );
   break;
+  case "DEV3":
+    $database = array (
+      "servidor"  => "db4free.net",
+      "usuario"   => "singus_user",
+      "clave"     => "Niwde830509",
+      "esquema"   => "singus_pruebas"
+    );
+  break;  
   case "PRO":
     $database = array (
       "servidor"  => "localhost",
