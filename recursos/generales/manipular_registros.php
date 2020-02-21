@@ -13,13 +13,14 @@
   else{                                                                     // Verificacion si NO hay error de servicio de la base de datos 
     $arregloInsercciones = array();
     $arregloActualizaciones = array();
+    $arregloEliminaciones  = array();
 
     foreach ($datos as $clave => $dato){
       $modo = $dato["modo"];
       unset( $dato["modo"]);
       if($modo == 'I') $arregloInsercciones[]    = $dato;
       if($modo == 'A') $arregloActualizaciones[] = $dato;
-      if($modo == 'E') $arregloeliminaciones[] = $dato;
+      if($modo == 'E') $arregloEliminaciones[] = $dato;
     }  
 
     // $instruccionSqlInserccion = $miConexion->ConstruirSQL("I", $tabla, $arregloInsercciones);

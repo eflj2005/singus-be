@@ -58,7 +58,7 @@
             $this->cabecera -> jti = base64_encode(openssl_random_pseudo_bytes(32));     //token id
             $this->cabecera -> iat = $iat;                                               //Momento creacion
             $this->cabecera -> nbf = $iat + 10;                                          //Momento minimo de uso
-            $this->cabecera -> exp = $iat + ( 5 * 60 * 60 ) ;                                       //expiración segundos
+            $this->cabecera -> exp = $iat + ( 5 * 60 * 60 ) ;                            //expiración segundos
             $this->cabecera -> iss = $GLOBALS["configuracion"]->database->servidor;      //desde donde fue generado               
         }
 
@@ -84,6 +84,7 @@
         public function Validar($tokenRecibido){
             try{
                 $data = JWT::decode( $tokenRecibido, $this->llave, array($this->algoritmo) );
+                
                 return true;
             }catch(Exception $error){
                 echo "<p>";
