@@ -1,7 +1,8 @@
 <?PHP
-  header("Access-Control-Allow-Origin:*");
-  header("Access-Control-Allow-Headers:*");
-  header("Access-Control-Allow-Methods: *");
+  header("Access-Control-Allow-Origin: *");
+  header("Access-Control-Allow-Headers: *");
+  header("Access-Control-Allow-Methods:  *");
+  
 
   require_once("config/config.php");                          //Llamado a archivo de configuración
 
@@ -126,6 +127,5 @@
     if(!(isset($accion)) || $accion == NULL || empty($accion) || gettype($accion) == "array")  $validar = false;
     return $validar;    
   }
-
  
 ?>

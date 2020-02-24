@@ -1,8 +1,6 @@
 <?PHP
-
 //Define el modo de ejecución de la BD => DEV = Desarrollo / PRO = Producción
-$modo = "DEV3";
-
+$modo = "DEV2";
 
 $database = null;
 
@@ -10,12 +8,20 @@ SWITCH ($modo){
   case "DEV1":
     $database = array (
       "servidor"  => "localhost",
-      "usuario"   => "singususer",
+      "usuario"   => "singus_user",
       "clave"     => "Niwde830509",
       "esquema"   => "singus"
     );
   break;
   case "DEV2":
+    $database = array (
+      "servidor"  => "localhost",
+      "usuario"   => "id12692344_singus_user",
+      "clave"     => "Niwde830509",
+      "esquema"   => "id12692344_singus"
+    );
+  break;  
+  case "DEV3":
     $database = array (
       "servidor"  => "remotemysql.com:3306",
       "usuario"   => "kJda6oXEdO",
@@ -23,7 +29,7 @@ SWITCH ($modo){
       "esquema"   => "kJda6oXEdO"
     );
   break;
-  case "DEV3":
+  case "DEV4":
     $database = array (
       "servidor"  => "db4free.net",
       "usuario"   => "singus_user",
@@ -49,7 +55,6 @@ $respuesta = array(
   ) 
 );
 
-
 $configuracion = (object) $respuesta;
 
 /*
@@ -59,4 +64,3 @@ print_r($configuracion);
 echo "</pre>";
 */
 ?>
-
