@@ -18,15 +18,16 @@
   
   $metodo = $_SERVER['REQUEST_METHOD'];
   
+
   if($metodo == "OPTIONS"){}
   else{
     $accion = NULL;
     $token = apache_request_headers();
     
-    if(!(isset($token['Authorization'])) || $token['Authorization'] == NULL || empty($token['Authorization'])){
+    if(!(isset($token['authorization'])) || $token['authorization'] == NULL || empty($token['authorization'])){
         $token = NULL;
     }else {
-        preg_match('/Bearer\s(\S+)/', $token['Authorization'], $matches);
+        preg_match('/Bearer\s(\S+)/', $token['authorization'], $matches);
         $token =$matches[1];
     }
     
