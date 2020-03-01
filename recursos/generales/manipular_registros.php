@@ -69,7 +69,7 @@
         if($validador){
 
 
-          $instruccion=$miConexion->ConstruirSQL("E", $tabla, $eliminacions);
+          $instruccion=$miConexion->ConstruirSQL("E", $tabla, $eliminacion);
           $miConexion->EjecutarSQL($instruccion);
           if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
             $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error
