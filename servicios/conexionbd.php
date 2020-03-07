@@ -154,7 +154,7 @@
         break;
         case "E":
 
-          $instruccionSql = "DELETE FROM $nombretabla WHERE ".$datosRecibidos['id'];
+          $instruccionSql = "DELETE FROM $nombretabla WHERE id = ".$datosRecibidos['id'];
 
         break;        
       }
