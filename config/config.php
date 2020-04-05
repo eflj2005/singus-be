@@ -1,11 +1,11 @@
 <?PHP
 //Define el modo de ejecución de la BD => DEV = Desarrollo / PRO = Producción
-$modo = "DEV2";
+$modo = "DEV";
 
 $database = null;
 
 SWITCH ($modo){
-  case "DEV1":
+  case "DEV":
     $database = array (
       "servidor"  => "localhost",
       "usuario"   => "singus_user",
@@ -13,36 +13,12 @@ SWITCH ($modo){
       "esquema"   => "singus"
     );
   break;
-  case "DEV2":
-    $database = array (
-      "servidor"  => "localhost",
-      "usuario"   => "id12692344_singus_user",
-      "clave"     => "Niwde830509",
-      "esquema"   => "id12692344_singus"
-    );
-  break;  
-  case "DEV3":
-    $database = array (
-      "servidor"  => "remotemysql.com:3306",
-      "usuario"   => "kJda6oXEdO",
-      "clave"     => "3HiwKtz86F",
-      "esquema"   => "kJda6oXEdO"
-    );
-  break;
-  case "DEV4":
-    $database = array (
-      "servidor"  => "db4free.net",
-      "usuario"   => "singus_user",
-      "clave"     => "Niwde830509",
-      "esquema"   => "singus_pruebas"
-    );
-  break;  
   case "PRO":
     $database = array (
       "servidor"  => "localhost",
-      "usuario"   => "singususer",
+      "usuario"   => "singus_user",
       "clave"     => "Niwde830509",
-      "esquema"   => "singus"
+      "esquema"   => "singus_pruebas"
     );    
   break;
 }

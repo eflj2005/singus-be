@@ -3,6 +3,9 @@
   header("Access-Control-Allow-Headers: *");
   header("Access-Control-Allow-Methods:  *");
   
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
+
 
   require_once("config/config.php");                          //Llamado a archivo de configuración
 
@@ -23,14 +26,21 @@
   else{
     $accion = NULL;
     $token = apache_request_headers();
-    
-    if(!(isset($token['authorization'])) || $token['authorization'] == NULL || empty($token['authorization'])){
+
+    foreach ($token as $campo => $valor){                                     // pasa a minuscula la clave Authorization si se detecta para estandarizar
+      if( strtolower($campo) == "authorization" ){
+        $token["authorization"] = $token[$campo];
+      }
+    }
+
+    if( !( isset( $token['authorization'] ) ) || $token['authorization'] == NULL || empty( $token['authorization'] ) ){
         $token = NULL;
     }else {
-        preg_match('/Bearer\s(\S+)/', $token['authorization'], $matches);
-        $token =$matches[1];
+      preg_match('/Bearer\s(\S+)/', $token["authorization"], $matches);
+      $token =$matches[1];
     }
-    
+
+
     switch ($metodo){
       case "POST":
       case "PUT":
@@ -41,20 +51,20 @@
         // echo "<p>post_vars: </p>";
         // echo "<pre>";
         // print_r($post_vars);
-        // echo "</pre>";    
-        // var_dump($post_vars);
+        // echo "</pre>";
+        //  var_dump($post_vars);
 
         if( validarAccion( $post_vars["accion"] ) ) {    definirAccion($post_vars["accion"],$metodo,$token,$post_vars);     }
-        else                                        {    $respuesta->preparar(203, 404, false); $respuesta->responder();    }
+        else                                        {    $controlRespuesta->preparar(203, 404, false); $controlRespuesta->responder();    }
       break;
       case "GET":
       case "DELETE":
         if( validarAccion( $_GET["accion"] ) )      {    definirAccion($_GET["accion"],$metodo,$token,$_GET);          }
-        else                                        {    $respuesta->preparar(203, 404, false); $respuesta->responder();    }                    
+        else                                        {    $controlRespuesta->preparar(203, 404, false); $controlRespuesta->responder();    }                    
       break;
       default:
-        $respuesta->preparar(203, 403, false);
-        $respuesta->responder();                
+        $controlRespuesta->preparar(203, 403, false);
+        $controlRespuesta->responder();                
       break;
     }
   }
