@@ -10,7 +10,7 @@ SWITCH ($modo){
       "servidor"  => "localhost",
       "usuario"   => "singus_user",
       "clave"     => "Niwde830509",
-      "esquema"   => "singus"
+      "esquema"   => "singus_pruebas"
     );
   break;
   case "PRO":
@@ -18,7 +18,7 @@ SWITCH ($modo){
       "servidor"  => "localhost",
       "usuario"   => "singus_user",
       "clave"     => "Niwde830509",
-      "esquema"   => "singus_pruebas"
+      "esquema"   => "singus"
     );    
   break;
 }
