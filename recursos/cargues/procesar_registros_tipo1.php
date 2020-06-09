@@ -114,12 +114,13 @@
                       }
 
                       //P_NOMBRE & S_NOMBRE
-                      $nombre = explode(" ", $registrosPersonas[$posicionPersona]->nombres);
-                      if( strcmp( ($dato["P_NOMBRE"]) , $nombre[0] ) != 0 ){
-                        $cambiosTemporal = array_merge( $cambiosTemporal, Array("P_NOMBRE" =>  $nombre[0] ) );
+                      $nombre_1 = explode(" ", $registrosPersonas[$posicionPersona]->nombres)[0];
+                      $nombre_2 = substr( $registrosPersonas[$posicionPersona]->nombres , strlen( $nombre_1 ) + 1 );
+                      if( strcmp( $dato["P_NOMBRE"] , $nombre_1 ) != 0 ){
+                        $cambiosTemporal = array_merge( $cambiosTemporal, Array("P_NOMBRE" =>  $nombre_1 ) );
                       }
-                      if( strcmp( ($dato["S_NOMBRE"]) , $nombre[1] ) != 0 ){
-                        $cambiosTemporal = array_merge( $cambiosTemporal, Array("S_NOMBRE" =>  $nombre[1] ) );
+                      if( strcmp( $dato["S_NOMBRE"] , $nombre_2 ) != 0 ){
+                        $cambiosTemporal = array_merge( $cambiosTemporal, Array("S_NOMBRE" =>  $nombre_3 ) );
                       }
 
                       //APELLIDOS

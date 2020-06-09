@@ -127,8 +127,8 @@
           $nuevoDato=array();
 
           foreach ($camposTabla as $claveCampos => $campo) {
-            if( !isset($datosRecibidos[$campo]) ) $datosRecibidos[$campo] = 'NULL';
-            else                                  $datosRecibidos[$campo] = "'".$datosRecibidos[$campo]."'";
+            if( !isset($datosRecibidos[$campo]) || $datosRecibidos[$campo]=="NULL" )  $datosRecibidos[$campo] = 'NULL';
+            else                                                                      $datosRecibidos[$campo] = "'".$datosRecibidos[$campo]."'";
             
             $nuevoDato[] = $datosRecibidos[$campo];
           }
@@ -143,7 +143,9 @@
 
           foreach ($camposTabla as $claveCampos => $campo) {
             if( isset($datosRecibidos[$campo]) ){
-              $datosRecibidos[$campo] = $campo." = '".$datosRecibidos[$campo]."'";
+              if( $datosRecibidos[$campo]=="NULL" )   $datosRecibidos[$campo] = $campo." = NULL";
+              else                                    $datosRecibidos[$campo] = $campo." = '".$datosRecibidos[$campo]."'";
+              
               $nuevoDato[] = $datosRecibidos[$campo];
             }            
           }

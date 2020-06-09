@@ -119,7 +119,7 @@
     }
 
 
-    // echo "Consulta: || ".$sql." ||";
+    //echo "Consulta: || ".$sql." ||";
     
     $miConexion->EjecutarSQL($sql);                                                     // Ejecución de consulta en la base de datos  
     
@@ -128,7 +128,7 @@
       $this->contrlRespst->preparar(203, 400, $error);             // preparación de respuesta HTTP con error
     }else{                                                                              // Verificacion si NO hay errores en la consulta
       $registros = $miConexion->GetResultados();
-      if($tabla == "usuarios"){
+      if($tabla == "usuarios" && !is_null($registros) ){
         foreach ($registros as $indice => $registro){
           $registros[$indice]->clave = "";
         }

@@ -43,19 +43,26 @@
         $miConexion->EjecutarSQL("UPDATE usuarios SET codigovalidacion='".$codigo."' WHERE id=".$datos["idBuscado"]);
 
 
+        global $debug;
+        $GLOBALS['debug']="";
+
         // Instantiation and passing `true` enables exceptions
         $mail = new PHPMailer(true);
 
         try {
           //Server settings
-          // $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+          $mail->SMTPDebug = 3;                      // Enable verbose debug output
           $mail->isSMTP();                                            // Send using SMTP
-          $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+           $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
           $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
           $mail->Username   = 'eflj2005@gmail.com';                     // SMTP username
-          $mail->Password   = 'Niwde830509*';                               // SMTP password
-          $mail->SMTPSecure = "TLS";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
+          $mail->Password   = 'tyrbknhldxwvewmc';                               // SMTP password
+          $mail->SMTPSecure = "PHPMailer::ENCRYPTION_STARTTLS";         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` also accepted
           $mail->Port       = 587;                                    // TCP port to connect to
+
+          $mail->Debugoutput = function($str, $level) {
+            $GLOBALS['debug'] .= "$level: $str\n";
+          };
 
           // SMTP username: Your Gmail address
           // SMTP password: Your Gmail password
@@ -85,16 +92,24 @@
 
           $mail->send();
 
+
           $this->contrlRespst->preparar(200, 200, true);       // preparación de respuesta HTTP definida
         } 
         catch (Exception $e) {
           $this->contrlRespst->preparar(203, 401, "Su mensaje no a podido ser enviado: Error: ".$mail->ErrorInfo); 
-        }           
+           echo $debug;
+        }   
+        
+        // $this->contrlRespst->preparar(200, 200, true);       // preparación de respuesta HTTP definida
+
+
+ 
+
       }
       else{
         $this->contrlRespst->preparar(203, 401, "Información para procesar incorrecta");       // preparación de respuesta HTTP definida
       }
     }    
   }
-  @$this->contrlRespst->responder();
+  $this->contrlRespst->responder();
 ?>

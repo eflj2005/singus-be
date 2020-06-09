@@ -35,7 +35,7 @@
         $instruccion=$miConexion->ConstruirSQL("I", $tabla, $inserccion);
         $miConexion->EjecutarSQL($instruccion);
         if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
-          $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error
+          $this->contrlRespst->preparar(203, 400,  $miConexion->GetError()." - SQL: ".$instruccion);             // preparación de respuesta HTTP con error
           $validador=false;
           $miConexion->ReversarInstruccionesSQL();
         }
@@ -56,7 +56,7 @@
           $instruccion=$miConexion->ConstruirSQL("A", $tabla, $actualizacion);
           $miConexion->EjecutarSQL($instruccion);
           if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
-            $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error
+            $this->contrlRespst->preparar(203, 400,  $miConexion->GetError()." - SQL: ".$instruccion);             // preparación de respuesta HTTP con error
             $validador=false;
             $miConexion->ReversarInstruccionesSQL();              
           }
@@ -72,7 +72,7 @@
 
           $miConexion->EjecutarSQL($instruccion);
           if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
-            $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());             // preparación de respuesta HTTP con error
+            $this->contrlRespst->preparar(203, 400,  $miConexion->GetError()." - SQL: ".$instruccion);             // preparación de respuesta HTTP con error
             $validador=false;
             $miConexion->ReversarInstruccionesSQL();              
           }
@@ -81,9 +81,11 @@
     }
 
     if($validador){
-      $this->contrlRespst->preparar(200, 200, array("estado"=>true, "dbRefs" => $dbRefs) );
       if(!$miConexion->ConfirmarInstruccionesSQL()){
-            echo $miConexion->GetError();
+            $this->contrlRespst->preparar(203, 400,  $miConexion->GetError());
+      }
+      else{
+        $this->contrlRespst->preparar(200, 200, array("estado"=>true, "dbRefs" => $dbRefs) );
       }
     }
 
