@@ -55,7 +55,12 @@
     }
 
     if($modo == "A"){
-      $sql="SELECT ".$tabla.".*";
+
+      $sql="";
+
+      if($caracteristicas->especiales->distinct == false) $sql.="SELECT ".$tabla.".*";
+      else                                                $sql.="SELECT DISTINCT ".$tabla.".*";
+
 
       if( !is_null( $caracteristicas->columnas ) ){
 
@@ -79,7 +84,15 @@
 
         $enlaces=" ";
         foreach ( $caracteristicas->enlaces as $elemento){
-          $enlaces .= "INNER JOIN ".$elemento->tablaE." ON ".$elemento->tablaPk.".id"." = ".$elemento->tablaFk.".".$elemento->tablaPk."_id ";
+          $enlaces .= "INNER JOIN ".$elemento->tablaE;
+          if($elemento->tablaAlss != "" )  {
+            $enlaces .= " AS ".$elemento->tablaAlss." ON ".$elemento->tablaPk.".id"." = ".$elemento->tablaAlss.".".$elemento->tablaPk."_id ";
+          }
+          else{
+            $enlaces .= " ON ".$elemento->tablaPk.".id"." = ".$elemento->tablaFk.".".$elemento->tablaPk."_id ";
+          }
+          
+         
         }
         $sql .= $enlaces;
 
@@ -90,10 +103,13 @@
         $condiciones=" ";
         $conteo=0;
         foreach ( $caracteristicas->filtros as $elemento){
-          if($conteo==0)   $condiciones .= "WHERE ";
+          if($conteo==0)  $condiciones .= "WHERE ";
+          else            $condiciones .= $elemento->operadorLogico." ";
           if( !is_null( $elemento->tabla ) ) $condiciones .= $elemento->tabla.".";
           $condiciones .=  $elemento->campo ." ".$elemento->condicion." '".$elemento->valor."' ";
-          if( $conteo < ( count( $caracteristicas->filtros )-1 ) )   $condiciones .= "AND ";
+          // if( $conteo < ( count( $caracteristicas->filtros )-1 ) )   {
+          //   $condiciones .= operadorLogico;
+          // }
           $conteo++;
         }
         $sql .= $condiciones;
@@ -115,11 +131,10 @@
       }
 
 
-
     }
 
 
-    //echo "Consulta: || ".$sql." ||";
+    // echo "Consulta: || ".$sql." ||";
     
     $miConexion->EjecutarSQL($sql);                                                     // Ejecución de consulta en la base de datos  
     
