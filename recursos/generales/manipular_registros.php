@@ -2,6 +2,8 @@
 
   // /* Este recurso se encarga de crear o modificar registros de acuerdo a la modalidad que se reciba */
 
+
+  
   $miConexion = $this->contrlRespst->obtenerConexion();                               // Asisgnacion de conexionBD a variable local
 
   $dbRefs = array();
