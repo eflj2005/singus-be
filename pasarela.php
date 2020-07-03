@@ -50,9 +50,10 @@
         // echo "Accion: ".$post_vars["accion"];
         // echo "<p>post_vars: </p>";
         // echo "<pre>";
-        // print_r($post_vars);
+        // // print_r($post_vars);
+        // var_dump($post_vars);
         // echo "</pre>";
-        //  var_dump($post_vars);
+
 
         if( validarAccion( $post_vars["accion"] ) ) {    definirAccion($post_vars["accion"],$metodo,$token,$post_vars);     }
         else                                        {    $controlRespuesta->preparar(203, 404, false); $controlRespuesta->responder();    }
