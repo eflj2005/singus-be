@@ -27,10 +27,12 @@
           $condiciones=" ";
           $conteo=0;
           foreach ( $caracteristicas->filtros as $elemento){
-            if($conteo==0)   $condiciones .= "WHERE ";
+            if($conteo==0)  $condiciones .= "WHERE ";
+            else            $condiciones .= $elemento->operadorLogico." ";
+            if( !is_null( $elemento->tabla ) ) $condiciones .= $elemento->tabla.".";
             $condiciones .=  $elemento->campo ." ".$elemento->condicion." '".$elemento->valor."' ";
-            if( $conteo < ( count( $caracteristicas->filtros )-1 ) )   $condiciones .= "AND ";
             $conteo++;
+
           }
           $sql .= $condiciones;
 
@@ -107,9 +109,6 @@
           else            $condiciones .= $elemento->operadorLogico." ";
           if( !is_null( $elemento->tabla ) ) $condiciones .= $elemento->tabla.".";
           $condiciones .=  $elemento->campo ." ".$elemento->condicion." '".$elemento->valor."' ";
-          // if( $conteo < ( count( $caracteristicas->filtros )-1 ) )   {
-          //   $condiciones .= operadorLogico;
-          // }
           $conteo++;
         }
         $sql .= $condiciones;
@@ -132,10 +131,7 @@
 
 
     }
-
-
-    // echo "Consulta: || ".$sql." ||";
-    
+   
     $miConexion->EjecutarSQL($sql);                                                     // Ejecución de consulta en la base de datos  
     
     if ($miConexion->GetCodigoRespuesta() == 400){                                      // Verificacion si hay errores en la consulta
