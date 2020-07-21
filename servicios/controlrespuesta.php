@@ -49,67 +49,67 @@ HTTP/1.0	505	HTTP Version Not Supported
 
 
 
-    class ControlRespuesta{
-        private $codigoActual;
-        private $cabeceraActual;
-        private $respuestaActual;
-        private $conexionActual;
+class ControlRespuesta{
+    private $codigoActual;
+    private $cabeceraActual;
+    private $respuestaActual;
+    private $conexionActual;
 
-        private $listaCodigosInternos;
+    private $listaCodigosInternos;
 
-        public function __construct(){
-            $this->listaCodigosInternos = array(
-                200 => "Resultados",
-                201 => "Inserción Correcta",
-                202 => "Actualización Correcta",
-                204 => "Validación Fallida",
-                205 => "Eliminación Correcta",
-                400 => "Consulta SQL fallida",
-                403 => "Llamado con metodo erroneo",
-                404 => "Recurso no existente",
-                401 => "Acceso No Autorizado",
-                503 => "BD No Disponible"
-            );
-        }
-
-        public function asignarConexionBD( $conexion ){
-            $this->conexionActual = $conexion;
-        }
-
-        public function obtenerConexion(){
-           return $this->conexionActual;
-        }
-
-        /*
-            Codigo Base: 200=>Respuestas Correctas, 203=>Error Controlado, 401=>Usuario No Autorizado
-        */
-        public function preparar($codigoBase, $CodigoMensaje, $resultados){
-            $this->cabeceraActual = "HTTP/1.0 ".$codigoBase;                           
-            $this->codigoActual = $CodigoMensaje;
-            $this->respuestaActual= $resultados;
-        }
-
-        public function responder(){
-            $respuesta = array( 
-                "codigo"  => $this->codigoActual,
-                "asunto"  => $this->listaCodigosInternos[$this->codigoActual],
-                "mensaje" =>  $this->respuestaActual
-            );
-            header($this->cabeceraActual);
-            echo json_encode($respuesta);
-                
-        }
-
-        public function responderToken($token){
-            $respuesta = array( 
-                "codigo"=> $this->codigoActual,  
-                "mensaje"=>  $this->respuestaActual,
-                "token"=> $token
-            );             
-            echo json_encode($respuesta);
-            header($this->cabeceraActual);
-        }
-
+    public function __construct(){
+        $this->listaCodigosInternos = array(
+            200 => "Resultados",
+            201 => "Inserción Correcta",
+            202 => "Actualización Correcta",
+            204 => "Validación Fallida",
+            205 => "Eliminación Correcta",
+            400 => "Consulta SQL fallida",
+            403 => "Llamado con metodo erroneo",
+            404 => "Recurso no existente",
+            401 => "Acceso No Autorizado",
+            503 => "BD No Disponible"
+        );
     }
+
+    public function asignarConexionBD( $conexion ){
+        $this->conexionActual = $conexion;
+    }
+
+    public function obtenerConexion(){
+        return $this->conexionActual;
+    }
+
+    /*
+        Codigo Base: 200=>Respuestas Correctas, 203=>Error Controlado, 401=>Usuario No Autorizado
+    */
+    public function preparar($codigoBase, $CodigoMensaje, $resultados){
+        $this->cabeceraActual = "HTTP/1.0 ".$codigoBase;                           
+        $this->codigoActual = $CodigoMensaje;
+        $this->respuestaActual= $resultados;
+    }
+
+    public function responder(){
+        $respuesta = array( 
+            "codigo"  => $this->codigoActual,
+            "asunto"  => $this->listaCodigosInternos[$this->codigoActual],
+            "mensaje" =>  $this->respuestaActual
+        );
+        header($this->cabeceraActual);
+        echo json_encode($respuesta);
+            
+    }
+
+    public function responderToken($token){
+        $respuesta = array( 
+            "codigo"=> $this->codigoActual,  
+            "mensaje"=>  $this->respuestaActual,
+            "token"=> $token
+        );             
+        echo json_encode($respuesta);
+        header($this->cabeceraActual);
+    }
+
+}
 
 ?>

@@ -28,17 +28,17 @@
         }
     }
 
-    class TokenDatosParaCodigo{
-        public $codigo;
-        public $tipo;
-        public $id;
+    // class TokenDatosParaCodigo{
+    //     public $codigo;
+    //     public $tipo;
+    //     public $id;
 
-        function __construct($datosRecibidos){
-            $this->codigo   = $datosRecibidos->codigo;
-            $this->tipo     = $datosRecibidos->tipo;
-            $this->id       = $datosRecibidos->id;
-        }
-    }
+    //     function __construct($datosRecibidos){
+    //         $this->codigo   = $datosRecibidos->codigo;
+    //         $this->tipo     = $datosRecibidos->tipo;
+    //         $this->id       = $datosRecibidos->id;
+    //     }
+    // }
 
     class Token {
 

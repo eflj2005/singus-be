@@ -127,11 +127,13 @@
           $nuevoDato=array();        
 
           foreach ($camposTabla as $claveCampos => $campo) {
+            
+              if( !array_key_exists ( $campo , $datosRecibidos ) )  $datosRecibidos[$campo] = 'NULL';
+              else if( is_null($datosRecibidos[$campo]) )           $datosRecibidos[$campo] = 'NULL';
+              else                                                  $datosRecibidos[$campo] = "'".$datosRecibidos[$campo]."'";
 
-            if( is_null($datosRecibidos[$campo]) )  $datosRecibidos[$campo] = 'NULL';
-            else                                    $datosRecibidos[$campo] = "'".$datosRecibidos[$campo]."'";
+              $nuevoDato[] = $datosRecibidos[$campo];
 
-            $nuevoDato[] = $datosRecibidos[$campo];
           }
 
           $informacion  = implode ( "," ,  $nuevoDato );
@@ -143,12 +145,13 @@
           $nuevoDato=array();
 
           foreach ($camposTabla as $claveCampos => $campo) {
-            if( isset($datosRecibidos[$campo]) ){
-              if( is_null($datosRecibidos[$campo]) )  $datosRecibidos[$campo] = $campo." = NULL";
-              else                                    $datosRecibidos[$campo] = $campo." = '".$datosRecibidos[$campo]."'";
+
+            if( !array_key_exists ( $campo , $datosRecibidos ) )  $datosRecibidos[$campo] = 'NULL';
+            else if (is_null($datosRecibidos[$campo]) )           $datosRecibidos[$campo] = $campo." = NULL";
+            else                                                  $datosRecibidos[$campo] = $campo." = '".$datosRecibidos[$campo]."'";
               
-              $nuevoDato[] = $datosRecibidos[$campo];
-            }            
+            $nuevoDato[] = $datosRecibidos[$campo];
+
           }
 
           $informacion  = implode ( "," ,  $nuevoDato );
