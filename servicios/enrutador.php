@@ -68,7 +68,7 @@
   $enrutador->AgregarRecurso("procesar_registros",      "POST", "recursos/generales/manipular_registros.php"    );
   $enrutador->AgregarRecurso("generar_codigo",          "POST", "recursos/usuarios/enviar_codigo.php"                   );
   $enrutador->AgregarRecurso("validar_codigo",          "POST", "recursos/usuarios/verificar_codigo.php"                );
-  $enrutador->AgregarRecurso("cargar_registros_tipo1",  "POST", "recursos/cargues/procesar_registros_tipo1.php"  );
+  $enrutador->AgregarRecurso("registros_cargue_tipo1",   "POST", "recursos/cargues/procesar_cargue_tipo1.php"  );
   $enrutador->AgregarRecurso("registrar_agenda",        "POST", "recursos/agendamiento/guardar_agenda.php"              );
 
     
