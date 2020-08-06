@@ -120,7 +120,7 @@
                         $cambiosTemporal = array_merge( $cambiosTemporal, Array("P_NOMBRE" =>  $nombre_1 ) );
                       }
                       if( strcmp( $dato["S_NOMBRE"] , $nombre_2 ) != 0 ){
-                        $cambiosTemporal = array_merge( $cambiosTemporal, Array("S_NOMBRE" =>  $nombre_3 ) );
+                        $cambiosTemporal = array_merge( $cambiosTemporal, Array("S_NOMBRE" =>  $nombre_2 ) );
                       }
 
                       //APELLIDOS
