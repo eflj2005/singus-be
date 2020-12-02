@@ -87,8 +87,13 @@
         $enlaces=" ";
         foreach ( $caracteristicas->enlaces as $elemento){
           $enlaces .= "INNER JOIN ".$elemento->tablaE;
-          if($elemento->tablaAlss != "" )  {
-            $enlaces .= " AS ".$elemento->tablaAlss." ON ".$elemento->tablaPk.".id"." = ".$elemento->tablaAlss.".".$elemento->tablaPk."_id ";
+          if($elemento->tablaAlias != "" )  {
+            if($elemento->modoAlias == "PK"){
+              $enlaces .= " AS ".$elemento->tablaAlias." ON ".$elemento->tablaAlias.".id"." = ".$elemento->tablaFk.".".$elemento->tablaPk."_id".($elemento->sufijoFK != "" ? "_".$elemento->sufijoFK." " : " ");
+            }
+            if($elemento->modoAlias == "FK"){
+              $enlaces .= " AS ".$elemento->tablaAlias." ON ".$elemento->tablaPk.".id"." = ".$elemento->tablaAlias.".".$elemento->tablaPk."_id".($elemento->sufijoFK != "" ? "_".$elemento->sufijoFK." " : " ");
+            }
           }
           else{
             $enlaces .= " ON ".$elemento->tablaPk.".id"." = ".$elemento->tablaFk.".".$elemento->tablaPk."_id ";
@@ -131,6 +136,8 @@
 
 
     }
+
+    // var_dump($sql);
    
     $miConexion->EjecutarSQL($sql);                                                     // Ejecución de consulta en la base de datos  
     
